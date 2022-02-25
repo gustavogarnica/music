@@ -49,16 +49,20 @@ def main():
         playlists[i].update({"tracks_data": tracks})
 
     # Dump
-    with open(f"playlists.json", 'w') as pf:
-        json.dump(json.dumps(playlists), pf)
+    with open(f"playlists.json", 'w') as pj:
+        json.dump(json.dumps(playlists), pj)
 
     # Report
-    for i in range(len(playlists)):
-        print(f"{i+1} - {playlists[i]['name']} (tracks: {playlists[i]['tracks']['total']})")
-        playlist_tracks = playlists[i]["tracks_data"]
-        for j in range(len(playlist_tracks)):
-            print(f"{j}: {playlist_tracks[j]['track']['artists'][0]['name']} - {playlist_tracks[j]['track']['name']}")
-        print()
+    with open(f"playlists.log", 'w') as pl:
+        for i in range(len(playlists)):
+            pl.write(f"Playlist {i+1} - {playlists[i]['name']} (tracks: {playlists[i]['tracks']['total']}) \n")
+            playlist_tracks = playlists[i]["tracks_data"]
+            for j in range(len(playlist_tracks)):
+                pl.write(f"Track {j+1}: {playlist_tracks[j]['track']['artists'][0]['name']} - {playlist_tracks[j]['track']['name']} \n")
+            pl.write(f"\n")
+
+    # End status
+    print(f"All done!")
 
 
 if __name__ == '__main__':
